@@ -67,6 +67,21 @@ done
 cd /workspaces/payments-api && npm run migrate
 
 echo ""
+echo "🌐 Exposing UI port..."
+echo ""
+
+# Wait for UI to start and expose port
+# This runs in background to not block setup completion
+(
+  sleep 10  # Give services time to start
+  
+  # Expose UI port (API is internal-only via localhost)
+  if gitpod environment port open 3000 --name "Payments UI" > /dev/null 2>&1; then
+    echo "✅ Payments UI port exposed"
+  fi
+) &
+
+echo ""
 echo "✅ Workspace setup complete!"
 echo ""
 echo "Repository structure:"
@@ -75,4 +90,5 @@ echo "  /workspaces/payments-ui    (cloned)"
 echo "  /workspaces/recon-worker   (cloned)"
 echo ""
 echo "Services will start automatically via automations."
+echo "UI will be accessible shortly on port 3000..."
 echo ""

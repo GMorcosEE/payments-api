@@ -84,7 +84,10 @@ services:
           elapsed=$((elapsed + 2))
         done
         echo "Dependencies ready, starting UI..."
-        export NEXT_PUBLIC_API_URL=http://localhost:3001
+        # Get the public API URL from Gitpod
+        API_URL=$(gitpod environment port open 3001 --name "Payments API" 2>/dev/null || echo "http://localhost:3001")
+        export NEXT_PUBLIC_API_URL=$API_URL
+        echo "Using API URL: $NEXT_PUBLIC_API_URL"
         npm run dev
       ready: |
         curl -f http://localhost:3000/

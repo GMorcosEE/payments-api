@@ -10,19 +10,11 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/payments-api,type=bind",
   "postCreateCommand": "bash .devcontainer/setup.sh",
   "postAttachCommand": "code --reuse-window /workspaces/payments-api/payments-system.code-workspace || true",
-  "forwardPorts": [3000, 3001, 5432],
+  "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
       "label": "Payments UI",
       "onAutoForward": "notify"
-    },
-    "3001": {
-      "label": "Payments API",
-      "onAutoForward": "notify"
-    },
-    "5432": {
-      "label": "PostgreSQL",
-      "onAutoForward": "ignore"
     }
   },
   "customizations": {

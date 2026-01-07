@@ -1,6 +1,6 @@
 # Payments API (Orchestrator Repository)
 
-**Main repository for the enterprise payment processing system.** Opening this repository in Ona/Gitpod automatically sets up a complete multi-repository development environment.
+**Main repository for the enterprise payment processing system.** Opening this repository in Ona automatically sets up a complete multi-repository development environment.
 
 ## 🏗️ Multi-Repository Architecture
 
@@ -12,20 +12,37 @@ This system demonstrates single-environment, multi-repository development:
 
 ## 🚀 Quick Start
 
-1. Open this repository in Ona/Gitpod
-2. The devcontainer will automatically:
-   - Clone `payments-ui` and `recon-worker` into `/workspaces/`
-   - Install dependencies across all repos
-   - Start Postgres
-   - Run migrations
-3. Start services:
+1. Open this repository in Ona
+2. Everything starts automatically:
+   - Clones `payments-ui` and `recon-worker` into `/workspaces/`
+   - Installs dependencies across all repos
+   - Starts PostgreSQL database
+   - Runs database migrations
+   - Starts all services (API, UI, Worker)
+3. Access the Payments UI on port 3000 (automatically exposed)
+   - API and database run internally on localhost
+4. Run validation (optional):
    ```bash
-   gitpod automations service start api ui worker
+   ona automations task start validate
    ```
-4. Run validation:
-   ```bash
-   gitpod automations task start validate
-   ```
+
+## 🔧 Managing Services
+
+Services start automatically, but you can control them manually:
+
+```bash
+# View service status
+ona automations service list
+
+# View service logs
+ona automations service logs api
+ona automations service logs ui
+ona automations service logs worker
+
+# Restart a service
+ona automations service stop api
+ona automations service start api
+```
 
 ## 📡 API Endpoints
 
@@ -53,7 +70,13 @@ End-to-end validation tests:
 6. Balance endpoint accuracy
 7. Idempotency
 
+Run validation using either command:
+
 ```bash
+# Using Ona automations
+ona automations task start validate
+
+# Or directly with npm
 npm run validate
 ```
 
