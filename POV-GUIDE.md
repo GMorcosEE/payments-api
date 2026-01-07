@@ -264,4 +264,4 @@ This PoV demonstrates:
 - Cross-repo changes in one session
 - Comprehensive validation
 
-This is not a toy app. It's a realistic demonstration of how Ona/Gitpod enables efficient development of complex, multi-repository systems.
+This app is a realistic demonstration of how Ona enables efficient development of complex, multi-repository systems.
