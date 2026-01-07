@@ -1,0 +1,31 @@
+{
+  "name": "Payments System",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "forwardPorts": [3000, 3001, 5432],
+  "portsAttributes": {
+    "3000": {
+      "label": "Payments UI",
+      "onAutoForward": "notify"
+    },
+    "3001": {
+      "label": "Payments API",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "ignore"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
