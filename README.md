@@ -19,8 +19,9 @@ This system demonstrates single-environment, multi-repository development:
    - Starts PostgreSQL database
    - Runs database migrations
    - Starts all services (API, UI, Worker)
-3. Access the Payments UI on port 3000 (automatically exposed)
-   - API and database run internally on localhost
+3. Access the Payments UI on port 3000 (only public port)
+   - API runs on localhost:3001 (private, accessed by UI)
+   - Database runs internally
 4. Run validation (optional):
    ```bash
    ona automations task start validate

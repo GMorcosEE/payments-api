@@ -15,6 +15,11 @@
     "3000": {
       "label": "Payments UI",
       "onAutoForward": "notify"
+    },
+    "3001": {
+      "label": "Payments API",
+      "onAutoForward": "ignore",
+      "visibility": "private"
     }
   },
   "customizations": {
