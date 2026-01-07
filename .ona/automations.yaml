@@ -5,23 +5,23 @@ tasks:
     description: Install dependencies for all repositories
     commands:
       - name: Install API dependencies
-        command: cd /workspaces/payments-api && npm install
+        command: cd /workspaces/workspaces/payments-api && npm install
       - name: Install UI dependencies
-        command: cd /workspaces/payments-ui && npm install
+        command: cd /workspaces/workspaces/payments-ui && npm install
       - name: Install Worker dependencies
-        command: cd /workspaces/recon-worker && npm install
+        command: cd /workspaces/workspaces/recon-worker && npm install
 
   migrate:
     description: Run database migrations
     commands:
       - name: Run migrations
-        command: cd /workspaces/payments-api && npm run migrate
+        command: cd /workspaces/workspaces/payments-api && npm run migrate
 
   validate:
     description: Run end-to-end validation
     commands:
       - name: Run validation script
-        command: cd /workspaces/payments-api && npm run validate
+        command: cd /workspaces/workspaces/payments-api && npm run validate
 
 services:
   postgres:
@@ -34,7 +34,7 @@ services:
 
   api:
     description: Payments API
-    command: cd /workspaces/payments-api && npm run dev
+    command: cd /workspaces/workspaces/payments-api && npm run dev
     env:
       PORT: "3001"
       PGHOST: localhost
@@ -53,7 +53,7 @@ services:
 
   ui:
     description: Payments UI
-    command: cd /workspaces/payments-ui && npm run dev
+    command: cd /workspaces/workspaces/payments-ui && npm run dev
     env:
       NEXT_PUBLIC_API_URL: http://localhost:3001
     dependsOn:
@@ -67,7 +67,7 @@ services:
 
   worker:
     description: Reconciliation Worker
-    command: cd /workspaces/recon-worker && npm run dev
+    command: cd /workspaces/workspaces/recon-worker && npm run dev
     env:
       PGHOST: localhost
       PGPORT: "5432"
