@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "name": "payments-api",
+      "path": "."
+    },
+    {
+      "name": "payments-ui",
+      "path": "../payments-ui"
+    },
+    {
+      "name": "recon-worker",
+      "path": "../recon-worker"
+    }
+  ],
+  "settings": {}
+}
