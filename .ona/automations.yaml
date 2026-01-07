@@ -52,7 +52,7 @@ services:
       ready: |
         curl -f http://localhost:3001/health
     triggeredBy:
-      - postStartCommand
+      - postDevcontainerStart
 
   ui:
     name: Payments UI
@@ -65,7 +65,7 @@ services:
       ready: |
         curl -f http://localhost:3000/
     triggeredBy:
-      - postStartCommand
+      - postDevcontainerStart
 
   worker:
     name: Reconciliation Worker
@@ -83,4 +83,4 @@ services:
         echo "Worker is ready"
         exit 0
     triggeredBy:
-      - postStartCommand
+      - postDevcontainerStart
