@@ -59,8 +59,8 @@ npm run validate
 
 ## 🔗 Related Repositories
 
-- [payments-ui](https://github.com/YOUR_USERNAME/payments-ui) - Next.js UI
-- [recon-worker](https://github.com/YOUR_USERNAME/recon-worker) - Background worker
+- [payments-ui](https://github.com/GMorcosEE/payments-ui) - Next.js UI
+- [recon-worker](https://github.com/GMorcosEE/recon-worker) - Background worker
 
 ## 📚 Documentation
 

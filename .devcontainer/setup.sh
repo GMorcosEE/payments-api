@@ -4,7 +4,7 @@ set -e
 echo "🚀 Setting up Payments System workspace..."
 
 # GitHub repository URLs (update these with your actual GitHub username/org)
-GITHUB_USER="${GITHUB_USER:-YOUR_USERNAME}"
+GITHUB_USER="${GITHUB_USER:-GMorcosEE}"
 PAYMENTS_UI_REPO="https://github.com/${GITHUB_USER}/payments-ui.git"
 RECON_WORKER_REPO="https://github.com/${GITHUB_USER}/recon-worker.git"
 

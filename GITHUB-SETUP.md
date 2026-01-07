@@ -33,19 +33,19 @@ From this workspace, push each repository:
 ```bash
 # Push payments-api (orchestrator)
 cd /workspaces/workspaces/payments-api
-git remote add origin https://github.com/YOUR_USERNAME/payments-api.git
+git remote add origin https://github.com/GMorcosEE/payments-api.git
 git branch -M main
 git push -u origin main
 
 # Push payments-ui
 cd /workspaces/workspaces/payments-ui
-git remote add origin https://github.com/YOUR_USERNAME/payments-ui.git
+git remote add origin https://github.com/GMorcosEE/payments-ui.git
 git branch -M main
 git push -u origin main
 
 # Push recon-worker
 cd /workspaces/workspaces/recon-worker
-git remote add origin https://github.com/YOUR_USERNAME/recon-worker.git
+git remote add origin https://github.com/GMorcosEE/recon-worker.git
 git branch -M main
 git push -u origin main
 ```
@@ -56,7 +56,7 @@ Update the setup script in `payments-api` to use your GitHub username:
 
 ```bash
 cd /workspaces/workspaces/payments-api
-# Edit .devcontainer/setup.sh and replace YOUR_USERNAME with your actual GitHub username
+# Edit .devcontainer/setup.sh and replace GMorcosEE with your actual GitHub username
 ```
 
 Or set the `GITHUB_USER` environment variable in your devcontainer:
@@ -72,7 +72,7 @@ Or set the `GITHUB_USER` environment variable in your devcontainer:
 ## Step 4: Test Multi-Repo Setup
 
 1. Delete your local workspace
-2. Open `https://github.com/YOUR_USERNAME/payments-api` in Ona/Gitpod
+2. Open `https://github.com/GMorcosEE/payments-api` in Ona/Gitpod
 3. The devcontainer will automatically:
    - Clone `payments-ui` to `/workspaces/payments-ui`
    - Clone `recon-worker` to `/workspaces/recon-worker`
