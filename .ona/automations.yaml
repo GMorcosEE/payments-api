@@ -42,6 +42,18 @@ services:
     commands:
       start: |
         cd /workspaces/payments-api
+        echo "Waiting for dependencies to be installed..."
+        timeout=60
+        elapsed=0
+        while [ ! -d "node_modules" ] || [ ! -f "node_modules/.package-lock.json" ]; do
+          if [ $elapsed -ge $timeout ]; then
+            echo "Timeout waiting for dependencies"
+            exit 1
+          fi
+          sleep 2
+          elapsed=$((elapsed + 2))
+        done
+        echo "Dependencies ready, starting API..."
         export PORT=3001
         export PGHOST=localhost
         export PGPORT=5432
@@ -60,6 +72,18 @@ services:
     commands:
       start: |
         cd /workspaces/payments-ui
+        echo "Waiting for dependencies to be installed..."
+        timeout=60
+        elapsed=0
+        while [ ! -d "node_modules" ] || [ ! -f "node_modules/.package-lock.json" ]; do
+          if [ $elapsed -ge $timeout ]; then
+            echo "Timeout waiting for dependencies"
+            exit 1
+          fi
+          sleep 2
+          elapsed=$((elapsed + 2))
+        done
+        echo "Dependencies ready, starting UI..."
         export NEXT_PUBLIC_API_URL=http://localhost:3001
         npm run dev
       ready: |
@@ -73,6 +97,18 @@ services:
     commands:
       start: |
         cd /workspaces/recon-worker
+        echo "Waiting for dependencies to be installed..."
+        timeout=60
+        elapsed=0
+        while [ ! -d "node_modules" ] || [ ! -f "node_modules/.package-lock.json" ]; do
+          if [ $elapsed -ge $timeout ]; then
+            echo "Timeout waiting for dependencies"
+            exit 1
+          fi
+          sleep 2
+          elapsed=$((elapsed + 2))
+        done
+        echo "Dependencies ready, starting worker..."
         export PGHOST=localhost
         export PGPORT=5432
         export PGDATABASE=payments
