@@ -1,79 +1,86 @@
-version: 1
-
 tasks:
   install-deps:
-    description: Install dependencies for all repositories
-    commands:
-      - name: Install API dependencies
-        command: cd /workspaces/payments-api && npm install
-      - name: Install UI dependencies
-        command: cd /workspaces/payments-ui && npm install
-      - name: Install Worker dependencies
-        command: cd /workspaces/recon-worker && npm install
+    name: Install dependencies for all repositories
+    command: |
+      cd /workspaces/payments-api && npm install
+      cd /workspaces/payments-ui && npm install
+      cd /workspaces/recon-worker && npm install
+    triggeredBy:
+      - manual
 
   migrate:
-    description: Run database migrations
-    commands:
-      - name: Run migrations
-        command: cd /workspaces/payments-api && npm run migrate
+    name: Run database migrations
+    command: cd /workspaces/payments-api && npm run migrate
+    triggeredBy:
+      - manual
 
   validate:
-    description: Run end-to-end validation
-    commands:
-      - name: Run validation script
-        command: cd /workspaces/payments-api && npm run validate
+    name: Run end-to-end validation
+    command: cd /workspaces/payments-api && npm run validate
+    triggeredBy:
+      - manual
 
 services:
   postgres:
-    description: PostgreSQL database
-    command: docker run --rm --name payments-postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=payments -p 5432:5432 postgres:16-alpine
-    readinessProbe:
-      command: pg_isready -h localhost -p 5432 -U postgres
-      initialDelaySeconds: 5
-      periodSeconds: 2
+    name: PostgreSQL database
+    description: PostgreSQL database for payments system
+    commands:
+      start: |
+        docker run --rm --name payments-postgres \
+          -e POSTGRES_PASSWORD=postgres \
+          -e POSTGRES_DB=payments \
+          -p 5432:5432 \
+          postgres:16-alpine
+      ready: |
+        docker exec payments-postgres pg_isready -U postgres
+    triggeredBy:
+      - postEnvironmentStart
 
   api:
-    description: Payments API
-    command: cd /workspaces/payments-api && npm run dev
-    env:
-      PORT: "3001"
-      PGHOST: localhost
-      PGPORT: "5432"
-      PGDATABASE: payments
-      PGUSER: postgres
-      PGPASSWORD: postgres
-    dependsOn:
-      - postgres
-    readinessProbe:
-      httpGet:
-        path: /health
-        port: 3001
-      initialDelaySeconds: 5
-      periodSeconds: 2
+    name: Payments API
+    description: Payments API service
+    commands:
+      start: |
+        cd /workspaces/payments-api
+        export PORT=3001
+        export PGHOST=localhost
+        export PGPORT=5432
+        export PGDATABASE=payments
+        export PGUSER=postgres
+        export PGPASSWORD=postgres
+        npm run dev
+      ready: |
+        curl -f http://localhost:3001/health
+    triggeredBy:
+      - postDevcontainerStart
 
   ui:
-    description: Payments UI
-    command: cd /workspaces/payments-ui && npm run dev
-    env:
-      NEXT_PUBLIC_API_URL: http://localhost:3001
-    dependsOn:
-      - api
-    readinessProbe:
-      httpGet:
-        path: /
-        port: 3000
-      initialDelaySeconds: 10
-      periodSeconds: 3
+    name: Payments UI
+    description: Payments UI frontend
+    commands:
+      start: |
+        cd /workspaces/payments-ui
+        export NEXT_PUBLIC_API_URL=http://localhost:3001
+        npm run dev
+      ready: |
+        curl -f http://localhost:3000/
+    triggeredBy:
+      - postDevcontainerStart
 
   worker:
-    description: Reconciliation Worker
-    command: cd /workspaces/recon-worker && npm run dev
-    env:
-      PGHOST: localhost
-      PGPORT: "5432"
-      PGDATABASE: payments
-      PGUSER: postgres
-      PGPASSWORD: postgres
-    dependsOn:
-      - postgres
-      - api
+    name: Reconciliation Worker
+    description: Background worker for reconciliation
+    commands:
+      start: |
+        cd /workspaces/recon-worker
+        export PGHOST=localhost
+        export PGPORT=5432
+        export PGDATABASE=payments
+        export PGUSER=postgres
+        export PGPASSWORD=postgres
+        npm run dev
+      ready: |
+        echo "Worker is ready"
+        exit 0
+    triggeredBy:
+      - postDevcontainerStart

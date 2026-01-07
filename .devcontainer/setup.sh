@@ -33,10 +33,46 @@ else
 fi
 
 echo ""
+echo "📦 Installing dependencies..."
+echo ""
+
+# Install dependencies for all repositories
+echo "Installing payments-api dependencies..."
+cd /workspaces/payments-api && npm install
+
+echo "Installing payments-ui dependencies..."
+cd /workspaces/payments-ui && npm install
+
+echo "Installing recon-worker dependencies..."
+cd /workspaces/recon-worker && npm install
+
+echo ""
+echo "🗄️  Running database migrations..."
+echo ""
+
+# Wait for PostgreSQL to be ready (it will be started by automations)
+echo "Waiting for PostgreSQL to be ready..."
+for i in {1..30}; do
+  if docker exec payments-postgres pg_isready -U postgres > /dev/null 2>&1; then
+    echo "✅ PostgreSQL is ready"
+    break
+  fi
+  if [ $i -eq 30 ]; then
+    echo "⚠️  PostgreSQL not ready after 30 seconds, migrations may fail"
+  fi
+  sleep 1
+done
+
+# Run migrations
+cd /workspaces/payments-api && npm run migrate
+
+echo ""
 echo "✅ Workspace setup complete!"
 echo ""
 echo "Repository structure:"
 echo "  /workspaces/payments-api   (this repo)"
 echo "  /workspaces/payments-ui    (cloned)"
 echo "  /workspaces/recon-worker   (cloned)"
+echo ""
+echo "Services will start automatically via automations."
 echo ""

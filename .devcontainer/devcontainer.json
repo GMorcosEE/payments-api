@@ -1,6 +1,11 @@
 {
   "name": "Payments System",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": false
+    }
+  },
   "postCreateCommand": "bash .devcontainer/setup.sh",
   "forwardPorts": [3000, 3001, 5432],
   "portsAttributes": {
